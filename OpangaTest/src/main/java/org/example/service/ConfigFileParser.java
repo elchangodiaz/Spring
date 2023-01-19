@@ -9,8 +9,7 @@ import java.util.*;
 
 public class ConfigFileParser{
 
-    String[] subSections;
-    public boolean parseConfigFile(String in) {
+    public HashMap<String, Integer> getSections(String in) {
 
         int i=0;
         int b;
@@ -29,14 +28,38 @@ public class ConfigFileParser{
             }
             if(s.contains("}")){
                 count--;
-            }
-            if(!s.contains("{") && !s.contains("}")){
-                
-            }
+            } 
         }
-
         System.out.println(map);
-        System.out.println(keyVal);
+        return map;
+    }
+
+public HashMap<String, Integer> getKeys(String in) {
+
+    int i=0;
+    int b;
+    long brackets = in.codePoints().filter(value -> value == '{').count();
+    int count = 0;
+    HashMap<String, Integer> map = new HashMap<>();
+    HashMap<String, String> keyVal = new HashMap<>();
+
+    List<String> file = Arrays.asList(in.split("[\\n]"));
+
+    for(String s:file){
+        if(s.contains("{")){
+            map.put(s.replace("{",""),count);
+            count++;
+        }
+        if(s.contains("}")){
+            count--;
+        } 
+    }
+    System.out.println(map);
+    return map;
+    }
+}
+
+
 
 
         //List<String> file = Arrays.asList(in.split("[\\n]"));
@@ -95,10 +118,6 @@ public class ConfigFileParser{
 ////            }
 ////            if(s.contains())
 //        }
-
-        return true;
-    }
-}
 
 
 //        file = file.replaceAll("\\n\\s|\\r|\\n|\\s\\s", "");

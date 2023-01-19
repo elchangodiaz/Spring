@@ -49,6 +49,7 @@ public class Main {
                         "}\n";
 
         ConfigFileParser configFileParser = new ConfigFileParser();
-        configFileParser.parseConfigFile(file);
+        configFileParser.getSections(file);
+        
     }
 }
