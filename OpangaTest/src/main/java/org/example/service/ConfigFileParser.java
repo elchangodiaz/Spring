@@ -16,46 +16,37 @@ public class ConfigFileParser{
         long brackets = in.codePoints().filter(value -> value == '{').count();
         int count = 0;
         HashMap<String, Integer> map = new HashMap<>();
-        HashMap<String, String> keyVal = new HashMap<>();
 
         List<String> file = Arrays.asList(in.split("[\\n]"));
 
         for(String s:file){
-            System.out.println(s);
+            //System.out.println(s);
             if(s.contains("{")){
                 map.put(s.replace("{",""),count);
                 count++;
             }
             if(s.contains("}")){
                 count--;
-            } 
+            }
+            if(!s.contains("{") && !s.contains("}")){
+                getKeys(s);
+            }
         }
         System.out.println(map);
         return map;
     }
 
-public HashMap<String, Integer> getKeys(String in) {
+    public Map<String, String> getKeys(String s) {
+        int x = 0;
+        HashMap<String, String> keyVal = new HashMap<>();
+        List<String> keys = Arrays.asList(s.split("[\\s|\\s\\s|\\s\\s\\s|\\s\\s\\s\\s]"));
 
-    int i=0;
-    int b;
-    long brackets = in.codePoints().filter(value -> value == '{').count();
-    int count = 0;
-    HashMap<String, Integer> map = new HashMap<>();
-    HashMap<String, String> keyVal = new HashMap<>();
-
-    List<String> file = Arrays.asList(in.split("[\\n]"));
-
-    for(String s:file){
-        if(s.contains("{")){
-            map.put(s.replace("{",""),count);
-            count++;
+        for(String k:keys){
+            System.out.println(x);
+            System.out.println(k);
+            x++;
         }
-        if(s.contains("}")){
-            count--;
-        } 
-    }
-    System.out.println(map);
-    return map;
+        return keyVal;
     }
 }
 
