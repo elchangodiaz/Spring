@@ -1,19 +1,21 @@
 package com.coherent.solutions.HotelCalifornia.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class Hospitality {
 
     private Integer room;
 
-    private long mount;
+    private double mount;
 
     private String type;
 
-    private List<String> extras;
-
+    private boolean available;
 
 }

@@ -1,7 +1,7 @@
 package com.coherent.solutions.HotelCalifornia.controller;
 
 import com.coherent.solutions.HotelCalifornia.model.RegistryRequest;
-import com.coherent.solutions.HotelCalifornia.service.IRegistryService;
+import com.coherent.solutions.HotelCalifornia.service.IHotelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,14 +16,14 @@ import reactor.core.publisher.Mono;
 public class RegistryController {
 
     @Autowired
-    IRegistryService service;
+    IHotelService service;
 
     @PostMapping(value = "/registry",
                 produces = {"application/json"},
                 consumes = {"application/json"})
     public Mono<ResponseEntity<Object>> excecuteRegistry(
         final ServerWebExchange exchange,
-        @RequestHeader(value = "Auth", required = true) String auth,
+        @RequestHeader(value = "Auth", required = false) String auth,
         @RequestBody(required = true) RegistryRequest request) {
 
         long initialMillis = System.currentTimeMillis();
@@ -35,4 +35,7 @@ public class RegistryController {
                     return new ResponseEntity<>(registryResponse, HttpStatus.CREATED);
                 });
     }
+
+
+
 }
