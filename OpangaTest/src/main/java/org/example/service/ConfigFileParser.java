@@ -1,13 +1,18 @@
 package org.example.service;
 
 
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.example.model.Person;
 import org.example.model.RuntimeDataStructure;
 import org.example.model.Section;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ConfigFileParser{
+
+
 
     public HashMap<String, Integer> getSections(String in) {
 
@@ -34,21 +39,26 @@ public class ConfigFileParser{
         }
         System.out.println(map);
         return map;
+
+
+        Person person = new Person("Javi", 22);
+
+        Map<String, String> map2 = new HashMap<>();
+
+        List<Person> persons = new ArrayList<>();
+        persons.add(person);
+
+        map.put(persons.stream().collect(Collectors.groupingBy(Person::getName)));
     }
 
     public Map<String, String> getKeys(String s) {
-        int x = 0;
-        HashMap<String, String> keyVal = new HashMap<>();
-        List<String> keys = Arrays.asList(s.split("[\\s|\\s\\s|\\s\\s\\s|\\s\\s\\s\\s]"));
 
-        for(String k:keys){
-            System.out.println(x);
-            System.out.println(k);
-            x++;
-        }
-        return keyVal;
+
+
     }
 }
+
+
 
 
 
