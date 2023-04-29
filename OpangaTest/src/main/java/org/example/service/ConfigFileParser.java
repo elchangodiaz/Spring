@@ -11,6 +11,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ConfigFileParser{
+	
+	public void validateFile(String file) throws Exception {
+		long bracketsOpen = file.codePoints().filter(value -> value == '{').count();
+		long bracketsClose = file.codePoints().filter(value -> value == '}').count();
+		
+		if(bracketsClose!=bracketsOpen) {
+			throw new Exception("Error, File format is incorrect");
+		}
+		
+		//ADD Validations
+		
+	}
 
 
 
@@ -21,6 +33,8 @@ public class ConfigFileParser{
         long brackets = in.codePoints().filter(value -> value == '{').count();
         int count = 0;
         HashMap<String, Integer> map = new HashMap<>();
+        List<Map<String, String>> keyMapList = new ArrayList<>();
+        List<String> flagList = new ArrayList<>();
 
         List<String> file = Arrays.asList(in.split("[\\n]"));
 
@@ -34,10 +48,18 @@ public class ConfigFileParser{
                 count--;
             }
             if(!s.contains("{") && !s.contains("}")){
-                getKeys(s);
+            	Map<String, String> mapValid = new HashMap<String, String>();
+            	mapValid = getKeys(s);
+            	if(!getFlags(s).isBlank()) {
+            		flagList.add(s);
+            	}
+            	if(!mapValid.isEmpty())
+            		keyMapList.add(mapValid);    
             }
         }
         System.out.println(map);
+        System.out.println(keyMapList);
+        System.out.println(flagList);
         return map;
 
 
@@ -52,97 +74,38 @@ public class ConfigFileParser{
     }
 
     public Map<String, String> getKeys(String s) {
-
-
-
+        int x = 0;
+        List<String> keyValList = new ArrayList<>();
+        HashMap<String, String> keyVal = new HashMap<>();
+        List<String> keys = Arrays.asList(s.trim().split("\\s+"));
+        String key;
+        String values;
+        if(keys.size()>1) {
+	        for(int i =0; i<keys.size();i++){
+	        	if(StringUtils.isAlphanumeric(keys.get(i))){
+	        		keyValList.add(keys.get(i));
+	        	}
+	        }
+	    		key = keyValList.get(0);
+	    		keyValList.remove(0);
+	    		values = StringUtils.join(keyValList, " ");
+	    		if(!key.isBlank() && !values.isBlank()) {
+	    			keyVal.put(key, values);
+	        }
+        }
+        return keyVal;
     }
+
+    public String getFlags(String in) {
+    	List<String> input = Arrays.asList(in.trim().split("\\s+"));
+    	String flag = " ";
+    	if(input.size()==1) {
+	        for(int i =0; i<input.size();i++){
+	        	if(StringUtils.isAlphanumeric(input.get(i))){
+	        		flag = in;
+	        	}
+	        }
+    	}
+    	return flag;
+	}
 }
-
-
-
-
-
-
-        //List<String> file = Arrays.asList(in.split("[\\n]"));
-//        in = in.replaceAll("\\n\\s|\\r|\\n|\\s\\s", "");
-//        RuntimeDataStructure dataStructure = new RuntimeDataStructure();
-//        Stack<String> strings = new Stack<>();
-//
-//        count = in.codePoints().filter(value -> value == '{').count();
-//
-//        for(int i=0; i<count; i++){
-//            a = in.indexOf("{");
-//            b = in.lastIndexOf("}");
-//
-//            if(i==0) {
-//                strings.push(in.substring(0,a));
-//            }
-//            in = in.substring(a+1, b);
-//            strings.push(in);
-//            //System.out.println(in);
-//        }
-//
-//        for(String s:strings) {
-//            if(s.trim().isEmpty()){
-//                dataStructure.setStructure(s);
-//            }else{
-//                dataStructure.setSection();
-//            }
-//        }
-
-        //System.out.println(in);
-
-////        dataStructure.setStructure(in.substring(0,a));
-////        dataStructure.setSection(new Section());
-//
-//        System.out.println(dataStructure);
-
-
-//        in = in.replaceAll("\\n\\s|\\r|\\n|\\s\\s", "");
-//        System.out.println(in);
-//        Stack<String> dataStructure = new Stack<>();
-//
-//        dataStructure.push(StringUtils.substringBefore(in, "{"));
-//
-//        for(String s:dataStructure) {
-//            System.out.println(s);
-//        }
-
-        //List<String> file = Arrays.asList(in.split("[\\n]"));
-        //List<String> sections = new ArrayList<>();
-        //RuntimeDataStructure dataStructure = new RuntimeDataStructure();
-
-//        for (String s:file) {
-//            System.out.println(s);
-//            //            if(s.contains("\\{")){
-////                dataStructure.setStructure(StringUtils.substringBefore(s, "\\{"));
-////            }
-////            if(s.contains())
-//        }
-
-
-//        file = file.replaceAll("\\n\\s|\\r|\\n|\\s\\s", "");
-//        //System.out.println(file);
-//        List<String> sections = Arrays.asList(file.split("[\\{]"));
-//        RuntimeStructure runtimeStructure = new RuntimeStructure();
-//
-//        for (String s:sections) {
-//            System.out.println(s);
-//            if(countWords(s)==1){
-//                runtimeStructure.setSection(s);
-//                break;
-//            }
-//            if(countWords(s)>1){
-//
-//            }
-//        }
-//
-//        System.out.println(runtimeStructure);
-//        return true;
-
-
-/*
-        RuntimeDataStructure rs = new RuntimeDataStructure();
-        rs.setStructure(StringUtils.);
-        rs.setStructure(StringUtils.substringBetween(file, "{", "}"));
- */
