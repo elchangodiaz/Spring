@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
@@ -27,6 +28,9 @@ public class HotelDAO implements IHotelDAO{
 
     @Override
     public Mono<Boolean> saveGuestReservation(Guest guest){
+
+        //TODO ADD an ID to guest
+        SecureRandom secureRandom = new SecureRandom();
 
         dbGuestBuilder().add(guest);
 
