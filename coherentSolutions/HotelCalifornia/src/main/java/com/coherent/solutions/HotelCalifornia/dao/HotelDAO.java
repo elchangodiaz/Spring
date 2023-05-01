@@ -2,15 +2,14 @@ package com.coherent.solutions.HotelCalifornia.dao;
 
 import com.coherent.solutions.HotelCalifornia.model.Guest;
 import com.coherent.solutions.HotelCalifornia.model.Hospitality;
+import com.coherent.solutions.HotelCalifornia.model.RegistryResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 @Repository
@@ -25,33 +24,46 @@ public class HotelDAO implements IHotelDAO{
 
     }
 
+    @Override
+    public Mono<Guest> getReservation(String id){
+
+        return Mono.just(dbGuestBuilder().stream()
+                .filter(guest -> guest.getId().equals(id))
+                .findFirst().orElse(new Guest()));
+
+    }
+
 
     @Override
-    public Mono<Boolean> saveGuestReservation(Guest guest){
+    public Mono<Integer> saveGuestReservation(Guest guest){
 
         //TODO ADD an ID to guest
-        SecureRandom secureRandom = new SecureRandom();
+        //guest.setId(UUID.randomUUID().toString());
+        final AtomicInteger count = new AtomicInteger(0);
+        guest.setId(count.incrementAndGet());
 
         dbGuestBuilder().add(guest);
 
         log.info("Registration {}", dbGuestBuilder());
 
-        return Mono.just(true);
+        return Mono.just(guest.getId());
 
     }
 
 
     private Set<Hospitality> dbHospitalityBuilder(){
-        Hospitality h1 = new Hospitality(1, 1200.50, "basic", false);
-        Hospitality h2 = new Hospitality(2, 2200, "pro", true);
-        Hospitality h3 = new Hospitality(3, 5000, "suite", false);
-        Hospitality h4 = new Hospitality(4, 1200.50, "basic", true);
+        //synchronized () {
+            Hospitality h1 = new Hospitality(1, 1200.50, "basic", false);
+            Hospitality h2 = new Hospitality(2, 2200, "pro", true);
+            Hospitality h3 = new Hospitality(3, 5000, "suite", false);
+            Hospitality h4 = new Hospitality(4, 1200.50, "basic", true);
 
-        Set<Hospitality> hospitalityDB = new HashSet<>();
+            final Set<Hospitality> hospitalityDB = new HashSet<>();
 
-        hospitalityDB.addAll(Arrays.asList(h1, h2, h3, h4));
+            hospitalityDB.addAll(Arrays.asList(h1, h2, h3, h4));
 
-        return hospitalityDB;
+            return hospitalityDB;
+  //      }
     }
 
     private Set<Guest> dbGuestBuilder(){

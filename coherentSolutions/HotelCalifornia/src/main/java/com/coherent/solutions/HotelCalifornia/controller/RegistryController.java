@@ -1,6 +1,9 @@
 package com.coherent.solutions.HotelCalifornia.controller;
 
+import com.coherent.solutions.HotelCalifornia.model.GetGuestRequest;
+import com.coherent.solutions.HotelCalifornia.model.Guest;
 import com.coherent.solutions.HotelCalifornia.model.RegistryRequest;
+import com.coherent.solutions.HotelCalifornia.model.RegistryResponse;
 import com.coherent.solutions.HotelCalifornia.service.IHotelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +32,31 @@ public class RegistryController {
         long initialMillis = System.currentTimeMillis();
 
         return service.registryGuest(request)
+                .map(response -> {
+                    log.info("Time response RegisterGuest {}", initialMillis);
+                    return new ResponseEntity<>(new RegistryResponse(response, "Registro exitoso", "Created", null), HttpStatus.CREATED);
+                });
+    }
+
+
+    @GetMapping(value = "/get_guest",
+            produces = {"application/json"},
+            consumes = {"application/json"})
+    public Mono<ResponseEntity<Object>> getRegistry(
+            final ServerWebExchange exchange,
+            @RequestHeader(value = "Auth", required = false) String auth,
+            @RequestBody(required = true) GetGuestRequest request) {
+
+        long initialMillis = System.currentTimeMillis();
+
+        return service.getGuest(request)
                 .map(registryResponse -> {
                     log.info("Time response RegisterGuest {}", initialMillis);
                     log.info("RegisterGuest Response {}", registryResponse.toString());
                     return new ResponseEntity<>(registryResponse, HttpStatus.CREATED);
                 });
     }
+
 
 
 
