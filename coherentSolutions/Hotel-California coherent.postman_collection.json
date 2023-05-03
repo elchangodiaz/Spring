@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "b58a1654-0e2b-4ddf-a85f-b0178c0995e2",
+		"name": "Hotel-California coherent",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "registryGuest",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reservation\": {\r\n        \"name\": \"Javier\",\r\n        \"room\": 2,\r\n        \"reservationDates\":[\r\n            \"2023-04-30\",\r\n            \"2023-05-01\"\r\n        ],\r\n        \"extras\":[]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/hotel/registry",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"hotel",
+						"registry"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registryGuest Copy",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reservation\": {\r\n        \"id\": \"1ebbb324-a4ae-4b09-9a90-6d4ddc76fab5\",\r\n        \"name\": \"Javier Mercado\",\r\n        \"room\": 1,\r\n        \"reservationDates\":[\r\n            \"2023-04-30\",\r\n            \"2023-05-01\"\r\n        ],\r\n        \"extras\":[]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/hotel/update_guest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"hotel",
+						"update_guest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetById",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"1ebbb324-a4ae-4b09-9a90-6d4ddc76fab5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/hotel/get_guest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"hotel",
+						"get_guest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetById Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"1ebbb324-a4ae-4b09-9a90-6d4ddc76fab5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/hotel/delete_guest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"hotel",
+						"delete_guest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAll",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/hotel/getAll_guest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"hotel",
+						"getAll_guest"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
