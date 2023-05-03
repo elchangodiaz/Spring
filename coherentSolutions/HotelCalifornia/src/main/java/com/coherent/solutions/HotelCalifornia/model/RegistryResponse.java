@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 public class RegistryResponse {
 
-    private Integer guestId;
+    private String guestId;
 
     private String message;
 

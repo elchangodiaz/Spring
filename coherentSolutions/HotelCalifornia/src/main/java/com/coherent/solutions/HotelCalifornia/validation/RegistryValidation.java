@@ -1,7 +1,6 @@
 package com.coherent.solutions.HotelCalifornia.validation;
 
-import com.coherent.solutions.HotelCalifornia.model.Guest;
-import com.coherent.solutions.HotelCalifornia.model.RegistryRequest;
+import com.coherent.solutions.HotelCalifornia.model.Reservation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.ObjectUtils;
@@ -10,21 +9,21 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class RegistryValidation {
 
-    public static Mono<Boolean> validateRequest(Guest guest){
+    public static Mono<Boolean> validateRequest(Reservation reservation){
 
-        if(ObjectUtils.isEmpty(guest)){
+        if(ObjectUtils.isEmpty(reservation)){
             throw new RuntimeException("Guest is required");
         }
 
-        if(!StringUtils.isAlphanumericSpace(guest.getName())){
+        if(!StringUtils.isAlphanumericSpace(reservation.getName())){
             throw new RuntimeException("Guest name bad format");
         }
 
-        if(guest.getRoom()>100){
+        if(reservation.getRoom()>100){
             throw new RuntimeException("Guest must choose a valid room");
         }
 
-        if(guest.getReservationDates().isEmpty()){
+        if(reservation.getReservationDates().isEmpty()){
             throw new RuntimeException("Guest must choose at least one reservationDate");
         }
 

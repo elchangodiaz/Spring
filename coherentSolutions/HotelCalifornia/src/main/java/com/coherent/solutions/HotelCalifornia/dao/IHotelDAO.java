@@ -1,17 +1,27 @@
 package com.coherent.solutions.HotelCalifornia.dao;
 
-import com.coherent.solutions.HotelCalifornia.model.Guest;
-import com.coherent.solutions.HotelCalifornia.model.RegistryResponse;
+import com.coherent.solutions.HotelCalifornia.model.Hospitality;
+import com.coherent.solutions.HotelCalifornia.model.RegistryRequest;
+import com.coherent.solutions.HotelCalifornia.model.Reservation;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IHotelDAO {
 
-    Optional<Boolean> roomAvailable(Guest guest);
+    //Optional<Boolean> roomAvailable(Reservation reservation);
 
-    Mono<Integer> saveGuestReservation(Guest guest);
+    Mono<String> saveReservation(RegistryRequest request);
 
-    Mono<Guest> getReservation(String id);
+    Mono<Reservation> getReservation(String id);
+
+    Mono<String> updateReservation(RegistryRequest request);
+
+    Mono<String> deleteReservation(String id);
+
+    Mono<String> createRoom();
+
+    Mono<List<Reservation>> getAllReservations();
 
 }
